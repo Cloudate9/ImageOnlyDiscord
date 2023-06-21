@@ -52,7 +52,7 @@ suspend fun main() {
 
     val channelRegex = Regex(config.channelRegex)
     kord.on<MessageCreateEvent> {
-        if (member?.isOwner() == false || member?.isBot == true) return@on
+        if (member?.isOwner() == true || member?.isBot == true) return@on
         if ((message.getChannelOrNull() as TextChannel?)?.name?.let { channelRegex.matches(it) } == true) {
             if (this.message.attachments.isEmpty()) {
                 message.delete("No picture detected in message in pics only chat")

@@ -4,7 +4,7 @@ plugins {
 }
 
 group = "com.cloudate9.imageonlydiscord"
-version = "1.0.0"
+version = "1.0.1"
 
 repositories {
     mavenCentral()
@@ -17,12 +17,24 @@ dependencies {
     implementation("org.slf4j:slf4j-simple:2.0.3")
 }
 
-tasks.jar {
-    manifest {
-        attributes["Main-Class"] = "${rootProject.group}.DiscordBotKt"
+tasks {
+    compileJava {
+        sourceCompatibility = "17"
+        targetCompatibility = "17"
     }
-    configurations["compileClasspath"].forEach { file: File ->
-        from(zipTree(file.absoluteFile))
+
+    compileKotlin {
+        kotlinOptions {
+            jvmTarget = "17"
+        }
     }
-    duplicatesStrategy = DuplicatesStrategy.INCLUDE
+    jar {
+        manifest {
+            attributes["Main-Class"] = "${rootProject.group}.DiscordBotKt"
+        }
+        configurations["compileClasspath"].forEach { file: File ->
+            from(zipTree(file.absoluteFile))
+        }
+        duplicatesStrategy = DuplicatesStrategy.INCLUDE
+    }
 }
